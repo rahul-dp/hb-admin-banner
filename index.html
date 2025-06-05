@@ -1,152 +1,545 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HubSpot Update Success Banner</title>
-<script
-src="https://cdn.tailwindcss.com"></script>
-<link
-href="https://fonts.googleapis.com/css2?
-family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-body {
-font-family: 'Inter', sans-serif;
-background-color: #f0f2f5;
-margin: 0;
-display: flex;
-justify-content: center;
-align-items: flex-start;
-min-height: 100vh;
-box-sizing: border-box;
-}
-.success-icon {
-width: 24px;
-height: 24px;
-min-width: 24px;
-}
-.close-icon {
-width: 20px;
-height: 20px;
-min-width: 20px;
-}
-.button-reconnecting {
-background-color: #a0a0a0;
-color: #ffffff;
-cursor: wait;
-pointer-events: none;
-border-color: #a0a0a0;
-}
-.button-reconnected {
-background-color: #22c55e;
-color: #ffffff;
-cursor: not-allowed;
-pointer-events: none;
-border-color: #22c55e;
-}
-</style>
-</head>
-<body class="antialiased">
-<div id="hubspot-banner" class="fixed top-0 left-0 right-0 w-full bg-green-100 border-b
-border-green-300 text-green-800 px-6 py-3 shadow-sm flex flex-col md:flex-row items-center
-justify-between transition-all duration-500 ease-in-out transform scale-100 opacity-100 z-50">
-<div class="flex items-center space-x-3 mb-2 md:mb-0 md:mr-4 flex-grow text-center
-md:text-left">
-<svg class="success-icon text-green-600" fill="none" stroke="currentColor" viewBox="0 0
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HubSpot Update Success Banner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?
+family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f0f2f5;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        box-sizing: border-box;
+      }
+      .success-icon {
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+      }
+      .close-icon {
+        width: 20px;
+        height: 20px;
+        min-width: 20px;
+      }
+      .button-reconnecting {
+        background-color: #a0a0a0;
+        color: #ffffff;
+        cursor: wait;
+        pointer-events: none;
+        border-color: #a0a0a0;
+      }
+      .button-reconnected {
+        background-color: #22c55e;
+        color: #ffffff;
+        cursor: not-allowed;
+        pointer-events: none;
+        border-color: #22c55e;
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <div
+      id="design-controls"
+      class="p-4 bg-gray-200 mb-4 flex space-x-2 justify-center fixed top-0 left-0 right-0 z-[100]"
+    >
+      <button
+        id="show-design-1-btn"
+        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      >
+        Show Design 1 (2 Buttons)
+      </button>
+      <button
+        id="show-design-2-btn"
+        class="px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-600"
+      >
+        Show Design 2 (1 Button, 2 Steps)
+      </button>
+    </div>
+
+    <div style="margin-top: 70px">
+      <div
+        id="hubspot-banner"
+        class="fixed top-16 left-0 right-0 w-full bg-green-100 border-b border-green-300 text-green-800 px-6 py-3 shadow-sm flex flex-col md:flex-row items-center justify-between transition-all duration-500 ease-in-out transform scale-100 opacity-100 z-50"
+      >
+        <div
+          class="flex items-center space-x-3 mb-2 md:mb-0 md:mr-4 flex-grow text-center md:text-left"
+        >
+          <svg
+            class="success-icon text-green-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0
 24 24"
-xmlns="http://www.w3.org/2000/svg">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2
-4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-</svg>
-<div>
-<p class="font-semibold text-base">HubSpot successfully updated!</p>
-<p class="text-xs mt-0.5">Please reconnect your accounts for full functionality.</p>
-</div>
-</div>
-<div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full md:w-auto relative">
-<button id="reconnect-org-btn" class="w-full sm:w-auto px-4 py-2 bg-orange-600 text-white font-medium text-xs rounded-md shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-colors duration-200 ease-in-out whitespace-nowrap">
-Reconnect Organization
-</button>
-<button id="reconnect-personal-btn" class="w-full sm:w-auto px-4 py-2 border border-
-orange-600 text-orange-600 font-medium text-xs rounded-md shadow-sm hover:bg-orange-50
-focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-colors
-duration-200 ease-in-out whitespace-nowrap">
-Reconnect Personal
-</button>
-<div id="personal-tooltip" class="hidden absolute mt-1 w-max px-2 py-1 bg-black text-white text-xs rounded shadow-lg z-10" style="top: 100%; left: 50%; transform: translateX(-50%); margin-top: 4px;">
-Reconnect organization first
-</div>
-</div>
-<button id="dismiss-banner-btn" class="absolute top-2 right-2 md:static ml-4 text-green-700
-hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2
-rounded-full p-1 transition-colors duration-200 ease-in-out">
-<svg class="close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-xmlns="http://www.w3.org/2000/svg">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18
-6M6 6l12 12"></path>
-</svg>
-</button>
-</div>
-<script>
-const banner = document.getElementById('hubspot-banner');
-const reconnectOrgBtn = document.getElementById('reconnect-org-btn');
-const reconnectPersonalBtn = document.getElementById('reconnect-personal-btn');
-const dismissBannerBtn = document.getElementById('dismiss-banner-btn');
-const personalTooltip = document.getElementById('personal-tooltip');
-let orgReconnected = false;
-let personalReconnected = false;
-function updateButtonState(button, isReconnected) {
-    button.classList.remove('bg-orange-600', 'hover:bg-orange-700', 'border', 'border-orange-600', 'text-orange-600', 'hover:bg-orange-50', 'bg-green-500', 'text-white', 'cursor-not-allowed', 'cursor-wait', 'button-reconnecting');
-    if (isReconnected) {
-        button.textContent = 'Reconnected!';
-        button.disabled = true;
-        button.classList.add('button-reconnected');
-    } else {
-        button.textContent = 'Reconnecting...';
-        button.disabled = true;
-        button.classList.add('button-reconnecting');
-    }
-}
-function checkAndDismissBanner() {
-    if (orgReconnected && personalReconnected) {
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2
+4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          <div>
+            <p class="font-semibold text-base">HubSpot successfully updated!</p>
+            <p class="text-xs mt-0.5">
+              Please reconnect your accounts for full functionality.
+            </p>
+          </div>
+        </div>
+        <div
+          class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full md:w-auto relative"
+        >
+          <button
+            id="reconnect-org-btn"
+            class="w-full sm:w-auto px-4 py-2 bg-orange-600 text-white font-medium text-xs rounded-md shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-colors duration-200 ease-in-out whitespace-nowrap"
+          >
+            Reconnect Organization
+          </button>
+          <button
+            id="reconnect-personal-btn"
+            class="w-full sm:w-auto px-4 py-2 border border- orange-600 text-orange-600 font-medium text-xs rounded-md shadow-sm hover:bg-orange-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-colors duration-200 ease-in-out whitespace-nowrap"
+          >
+            Reconnect Personal
+          </button>
+          <div
+            id="personal-tooltip"
+            class="hidden absolute mt-1 w-max px-2 py-1 bg-black text-white text-xs rounded shadow-lg z-10"
+            style="
+              top: 100%;
+              left: 50%;
+              transform: translateX(-50%);
+              margin-top: 4px;
+            "
+          >
+            Reconnect organization first
+          </div>
+        </div>
+        <button
+          id="dismiss-banner-btn"
+          class="absolute top-2 right-2 md:static ml-4 text-green-700 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-full p-1 transition-colors duration-200 ease-in-out"
+        >
+          <svg
+            class="close-icon"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18
+6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+      </div>
+
+      <div
+        id="hubspot-banner-d2"
+        style="display: none"
+        class="fixed top-16 left-0 right-0 w-full bg-blue-100 border-b border-blue-300 text-blue-800 px-6 py-3 shadow-sm flex flex-col md:flex-row items-center justify-between transition-all duration-500 ease-in-out transform scale-100 opacity-100 z-50"
+      >
+        <div
+          class="flex items-center space-x-3 mb-2 md:mb-0 md:mr-4 flex-grow text-center md:text-left"
+        >
+          <svg
+            class="success-icon text-blue-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          <div>
+            <p id="banner-title-d2" class="font-semibold text-base">
+              HubSpot Update: Action Required
+            </p>
+            <p id="banner-subtitle-d2" class="text-xs mt-0.5">
+              Step 1: Reconnect Organization
+            </p>
+          </div>
+        </div>
+        <div
+          class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full md:w-auto relative"
+        >
+          <button
+            id="action-btn-d2"
+            class="w-full sm:w-auto px-4 py-2 bg-purple-600 text-white font-medium text-xs rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-colors duration-200 ease-in-out whitespace-nowrap"
+          >
+            Reconnect Organization
+          </button>
+        </div>
+        <button
+          id="dismiss-banner-btn-d2"
+          class="absolute top-2 right-2 md:static ml-4 text-blue-700 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-full p-1 transition-colors duration-200 ease-in-out"
+        >
+          <svg
+            class="close-icon"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const banner = document.getElementById("hubspot-banner");
+      const reconnectOrgBtn = document.getElementById("reconnect-org-btn");
+      const reconnectPersonalBtn = document.getElementById(
+        "reconnect-personal-btn"
+      );
+      const dismissBannerBtn = document.getElementById("dismiss-banner-btn");
+      const personalTooltip = document.getElementById("personal-tooltip");
+      let orgReconnected = false;
+      let personalReconnected = false;
+
+      // Modified updateButtonState for Design 1 to include a reset/initial state
+      function updateButtonState(button, status) {
+        // status can be 'reconnecting', 'reconnected', or 'initial'
+        button.disabled = false;
+        button.classList.remove(
+          "bg-orange-600",
+          "hover:bg-orange-700", // Initial style for org button
+          "border",
+          "border-orange-600",
+          "text-orange-600",
+          "hover:bg-orange-50", // Initial style for personal button
+          "button-reconnecting",
+          "button-reconnected"
+        );
+
+        switch (status) {
+          case "reconnecting":
+            button.textContent = "Reconnecting...";
+            button.disabled = true;
+            button.classList.add("button-reconnecting");
+            break;
+          case "reconnected":
+            button.textContent = "Reconnected!";
+            button.disabled = true;
+            button.classList.add("button-reconnected");
+            break;
+          case "initial":
+            if (button.id === "reconnect-org-btn") {
+              button.textContent = "Reconnect Organization";
+              button.classList.add(
+                "bg-orange-600",
+                "text-white",
+                "hover:bg-orange-700"
+              );
+            } else if (button.id === "reconnect-personal-btn") {
+              button.textContent = "Reconnect Personal";
+              button.classList.add(
+                "border",
+                "border-orange-600",
+                "text-orange-600",
+                "hover:bg-orange-50"
+              );
+            }
+            break;
+        }
+      }
+
+      function resetDesign1State() {
+        orgReconnected = false;
+        personalReconnected = false;
+        if (reconnectOrgBtn) updateButtonState(reconnectOrgBtn, "initial");
+        if (reconnectPersonalBtn)
+          updateButtonState(reconnectPersonalBtn, "initial");
+        if (personalTooltip) personalTooltip.classList.add("hidden");
+        if (banner) {
+          banner.classList.add("scale-100", "opacity-100");
+          banner.classList.remove("scale-95", "opacity-0");
+        }
+      }
+
+      // Initial setup for Design 1 buttons
+      if (reconnectOrgBtn) updateButtonState(reconnectOrgBtn, "initial");
+      if (reconnectPersonalBtn)
+        updateButtonState(reconnectPersonalBtn, "initial");
+
+      function checkAndDismissBanner() {
+        if (orgReconnected && personalReconnected) {
+          setTimeout(() => {
+            if (banner) {
+              banner.classList.remove("scale-100", "opacity-100");
+              banner.classList.add("scale-95", "opacity-0");
+              banner.addEventListener("transitionend", function onD1Dismiss() {
+                if (banner) banner.style.display = "none";
+                resetDesign1State(); // Reset state after auto-dismissal
+                banner.removeEventListener("transitionend", onD1Dismiss);
+              });
+            }
+          }, 1000);
+        }
+      }
+      reconnectOrgBtn.addEventListener("click", () => {
+        if (orgReconnected) return;
+        if (personalTooltip) personalTooltip.classList.add("hidden");
+        updateButtonState(reconnectOrgBtn, "reconnecting"); // Changed from false
         setTimeout(() => {
-            banner.classList.remove('scale-100', 'opacity-100');
-            banner.classList.add('scale-95', 'opacity-0');
-            banner.addEventListener('transitionend', () => banner.remove());
-        }, 1000);
-    }
-}
-reconnectOrgBtn.addEventListener('click', () => {
-    if (orgReconnected) return;
-    personalTooltip.classList.add('hidden'); // Hide personal tooltip if shown
-    updateButtonState(reconnectOrgBtn, false);
-    setTimeout(() => {
-        orgReconnected = true;
-        updateButtonState(reconnectOrgBtn, true);
-        checkAndDismissBanner();
-    }, 2000);
-});
-reconnectPersonalBtn.addEventListener('click', () => {
-    if (!orgReconnected) {
-        personalTooltip.classList.remove('hidden');
-        // Optionally, hide the tooltip after a few seconds
-        // setTimeout(() => { personalTooltip.classList.add('hidden'); }, 3000);
-        return;
-    }
-    personalTooltip.classList.add('hidden'); // Ensure tooltip is hidden if org was reconnected
-    if (personalReconnected) return;
-    updateButtonState(reconnectPersonalBtn, false);
-    setTimeout(() => {
-        personalReconnected = true;
-        updateButtonState(reconnectPersonalBtn, true);
-        checkAndDismissBanner();
-    }, 2000);
-});
-dismissBannerBtn.addEventListener('click', () => {
-    banner.classList.remove('scale-100', 'opacity-100');
-    banner.classList.add('scale-95', 'opacity-0');
-    banner.addEventListener('transitionend', () => banner.remove());
-});
-</script>
-</body>
+          orgReconnected = true;
+          updateButtonState(reconnectOrgBtn, "reconnected"); // Changed from true
+          checkAndDismissBanner();
+        }, 2000);
+      });
+      reconnectPersonalBtn.addEventListener("click", () => {
+        if (!orgReconnected) {
+          personalTooltip.classList.remove("hidden");
+          // Optionally, hide the tooltip after a few seconds
+          // setTimeout(() => { personalTooltip.classList.add('hidden'); }, 3000);
+          return;
+        }
+        personalTooltip.classList.add("hidden"); // Ensure tooltip is hidden if org was reconnected
+        if (personalReconnected) return;
+        updateButtonState(reconnectPersonalBtn, "reconnecting"); // Changed from false
+        setTimeout(() => {
+          personalReconnected = true;
+          updateButtonState(reconnectPersonalBtn, "reconnected"); // Changed from true
+          checkAndDismissBanner();
+        }, 2000);
+      });
+      dismissBannerBtn.addEventListener("click", () => {
+        if (banner) {
+          banner.classList.remove("scale-100", "opacity-100");
+          banner.classList.add("scale-95", "opacity-0");
+          banner.addEventListener(
+            "transitionend",
+            function onD1ManualDismiss() {
+              if (banner) banner.style.display = "none";
+              resetDesign1State(); // Reset state after manual dismissal
+              banner.removeEventListener("transitionend", onD1ManualDismiss);
+            }
+          );
+        }
+      });
+    </script>
+
+    <script>
+      // --- Banner Design Switching Logic ---
+      const design1Banner = document.getElementById("hubspot-banner");
+      const design2Banner = document.getElementById("hubspot-banner-d2");
+      const showDesign1Btn = document.getElementById("show-design-1-btn");
+      const showDesign2Btn = document.getElementById("show-design-2-btn");
+
+      showDesign1Btn.addEventListener("click", () => {
+        if (design1Banner) {
+          if (typeof resetDesign1State === "function") {
+            resetDesign1State(); // Reset state first
+          }
+          design1Banner.style.display = "flex"; // Then explicitly show it
+        }
+        if (design2Banner) design2Banner.style.display = "none";
+      });
+
+      showDesign2Btn.addEventListener("click", () => {
+        if (design1Banner) design1Banner.style.display = "none";
+        if (design2Banner) {
+          design2Banner.style.display = "flex"; // or 'block' or original display type
+          // Explicitly reset Design 2 state and appearance for a clean start
+          if (bannerTitleD2)
+            bannerTitleD2.textContent = "HubSpot Update: Action Required";
+          if (bannerSubtitleD2)
+            bannerSubtitleD2.textContent = "Step 1: Reconnect Organization";
+          if (typeof updateButtonStateD2 === "function" && actionBtnD2) {
+            updateButtonStateD2(actionBtnD2, "initial");
+          }
+          // Ensure visibility classes are reset if they were changed during dismissal
+          bannerD2.classList.add("scale-100", "opacity-100");
+          bannerD2.classList.remove("scale-95", "opacity-0");
+        }
+        // Potentially reset Design 1 state here if needed
+      });
+
+      // --- Design 2: Two-Step, Single-Button Banner Logic ---
+      const bannerD2 = document.getElementById("hubspot-banner-d2");
+      const actionBtnD2 = document.getElementById("action-btn-d2");
+      const dismissBannerBtnD2 = document.getElementById(
+        "dismiss-banner-btn-d2"
+      );
+      const bannerTitleD2 = document.getElementById("banner-title-d2");
+      const bannerSubtitleD2 = document.getElementById("banner-subtitle-d2");
+
+      let orgReconnectedD2 = false;
+      let personalReconnectedD2 = false;
+      let currentStepD2 = 1;
+
+      function updateButtonStateD2(button, state, nextActionText = "") {
+        if (!button) return;
+        button.disabled = false;
+        button.classList.remove(
+          "bg-purple-600",
+          "hover:bg-purple-700",
+          "button-reconnecting",
+          "button-reconnected"
+        );
+        // Reset to default button styles for Design 2
+        button.classList.add(
+          "bg-purple-600",
+          "text-white",
+          "hover:bg-purple-700"
+        );
+
+        switch (state) {
+          case "reconnecting":
+            button.textContent =
+              currentStepD2 === 1
+                ? "Reconnecting Organization..."
+                : "Reconnecting Personal...";
+            button.disabled = true;
+            button.classList.remove("bg-purple-600", "hover:bg-purple-700");
+            button.classList.add("button-reconnecting"); // Assumes .button-reconnecting is defined in styles
+            break;
+          case "reconnected": // Final state after both steps
+            button.textContent = "All Reconnected!";
+            button.disabled = true;
+            button.classList.remove("bg-purple-600", "hover:bg-purple-700");
+            button.classList.add("button-reconnected"); // Assumes .button-reconnected is defined in styles
+            break;
+          case "next_step": // Intermediate state, button ready for next action
+            button.textContent = nextActionText;
+            // Styles for next step are default bg-purple-600, hover:bg-purple-700
+            break;
+          case "initial": // Initial state for the first step
+            button.textContent = "Reconnect Organization";
+            currentStepD2 = 1; // Reset step
+            orgReconnectedD2 = false;
+            personalReconnectedD2 = false;
+            if (bannerTitleD2)
+              bannerTitleD2.textContent = "HubSpot Update: Action Required";
+            if (bannerSubtitleD2)
+              bannerSubtitleD2.textContent = "Step 1: Reconnect Organization";
+            // Styles for initial state are default bg-purple-600, hover:bg-purple-700
+            break;
+        }
+      }
+
+      if (actionBtnD2) {
+        updateButtonStateD2(actionBtnD2, "initial"); // Initialize D2 button state
+      }
+
+      function checkAndDismissBannerD2() {
+        if (orgReconnectedD2 && personalReconnectedD2) {
+          setTimeout(() => {
+            if (bannerD2) {
+              bannerD2.classList.remove("scale-100", "opacity-100");
+              bannerD2.classList.add("scale-95", "opacity-0");
+              bannerD2.addEventListener(
+                "transitionend",
+                function onTransitionEnd() {
+                  if (bannerD2) bannerD2.style.display = "none";
+                  // Reset Design 2 state fully after it has been dismissed
+                  if (
+                    typeof updateButtonStateD2 === "function" &&
+                    actionBtnD2
+                  ) {
+                    updateButtonStateD2(actionBtnD2, "initial");
+                  }
+                  bannerD2.removeEventListener(
+                    "transitionend",
+                    onTransitionEnd
+                  ); // Clean up listener
+                }
+              );
+            }
+          }, 1000);
+        }
+      }
+
+      if (actionBtnD2) {
+        actionBtnD2.addEventListener("click", () => {
+          if (currentStepD2 === 1) {
+            if (orgReconnectedD2) return;
+            updateButtonStateD2(actionBtnD2, "reconnecting");
+            if (bannerSubtitleD2)
+              bannerSubtitleD2.textContent =
+                "Please wait while we reconnect your organization.";
+            setTimeout(() => {
+              orgReconnectedD2 = true;
+              if (bannerTitleD2)
+                bannerTitleD2.textContent = "Organization Reconnected!";
+              if (bannerSubtitleD2)
+                bannerSubtitleD2.textContent =
+                  "Next, reconnect your personal account for full functionality.";
+              updateButtonStateD2(
+                actionBtnD2,
+                "next_step",
+                "Reconnect Personal"
+              );
+              currentStepD2 = 2;
+            }, 2000);
+          } else if (currentStepD2 === 2) {
+            if (personalReconnectedD2) return;
+            updateButtonStateD2(actionBtnD2, "reconnecting");
+            if (bannerSubtitleD2)
+              bannerSubtitleD2.textContent =
+                "Please wait while we reconnect your personal account.";
+            setTimeout(() => {
+              personalReconnectedD2 = true;
+              if (bannerSubtitleD2)
+                bannerSubtitleD2.textContent =
+                  "All accounts successfully reconnected!";
+              updateButtonStateD2(actionBtnD2, "reconnected");
+              checkAndDismissBannerD2();
+            }, 2000);
+          }
+        });
+      }
+
+      if (dismissBannerBtnD2) {
+        dismissBannerBtnD2.addEventListener("click", () => {
+          if (bannerD2) {
+            bannerD2.classList.remove("scale-100", "opacity-100");
+            bannerD2.classList.add("scale-95", "opacity-0");
+            bannerD2.addEventListener(
+              "transitionend",
+              function onDismissTransitionEnd() {
+                if (bannerD2) bannerD2.style.display = "none";
+                // Reset Design 2 state when dismissed
+                if (typeof updateButtonStateD2 === "function" && actionBtnD2) {
+                  updateButtonStateD2(actionBtnD2, "initial");
+                }
+                bannerD2.removeEventListener(
+                  "transitionend",
+                  onDismissTransitionEnd
+                ); // Clean up listener
+              }
+            );
+          }
+        });
+      }
+
+      // Set initial visibility (Design 1 visible, Design 2 hidden)
+      if (design1Banner) design1Banner.style.display = "flex"; // Or original display type
+      if (design2Banner) design2Banner.style.display = "none";
+    </script>
+  </body>
 </html>
