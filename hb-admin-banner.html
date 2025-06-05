@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HubSpot Update Success Banner</title>
+<script
+src="https://cdn.tailwindcss.com"></script>
+<link
+href="https://fonts.googleapis.com/css2?
+family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body {
+font-family: 'Inter', sans-serif;
+background-color: #f0f2f5;
+margin: 0;
+display: flex;
+justify-content: center;
+align-items: flex-start;
+min-height: 100vh;
+box-sizing: border-box;
+}
+.success-icon {
+width: 24px;
+height: 24px;
+min-width: 24px;
+}
+.close-icon {
+width: 20px;
+height: 20px;
+min-width: 20px;
+}
+.button-reconnecting {
+background-color: #a0a0a0;
+color: #ffffff;
+cursor: wait;
+pointer-events: none;
+border-color: #a0a0a0;
+}
+.button-reconnected {
+background-color: #22c55e;
+color: #ffffff;
+cursor: not-allowed;
+pointer-events: none;
+border-color: #22c55e;
+}
+</style>
+</head>
+<body class="antialiased">
+<div id="hubspot-banner" class="fixed top-0 left-0 right-0 w-full bg-green-100 border-b
+border-green-300 text-green-800 px-6 py-3 shadow-sm flex flex-col md:flex-row items-center
+justify-between transition-all duration-500 ease-in-out transform scale-100 opacity-100 z-50">
+<div class="flex items-center space-x-3 mb-2 md:mb-0 md:mr-4 flex-grow text-center
+md:text-left">
+<svg class="success-icon text-green-600" fill="none" stroke="currentColor" viewBox="0 0
+24 24"
+xmlns="http://www.w3.org/2000/svg">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2
+4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+</svg>
+<div>
+<p class="font-semibold text-base">HubSpot successfully updated!</p>
+<p class="text-xs mt-0.5">Please reconnect your accounts for full functionality.</p>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full
+md:w-auto">
+<button id="reconnect-org-btn" class="w-full sm:w-auto px-4 py-2 bg-orange-600 text-
+white font-medium text-xs rounded-md shadow-sm hover:bg-orange-700 focus:outline-none
+focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-colors duration-200 ease-in-out
+whitespace-nowrap">
+Reconnect Organization
+</button>
+<button id="reconnect-personal-btn" class="w-full sm:w-auto px-4 py-2 border border-
+orange-600 text-orange-600 font-medium text-xs rounded-md shadow-sm hover:bg-orange-50
+focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-colors
+duration-200 ease-in-out whitespace-nowrap">
+Reconnect Personal
+</button>
+</div>
+<button id="dismiss-banner-btn" class="absolute top-2 right-2 md:static ml-4 text-green-700
+hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2
+rounded-full p-1 transition-colors duration-200 ease-in-out">
+<svg class="close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+xmlns="http://www.w3.org/2000/svg">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18
+6M6 6l12 12"></path>
+</svg>
+</button>
+</div>
+<script>
+const banner = document.getElementById('hubspot-banner');
+const reconnectOrgBtn = document.getElementById('reconnect-org-btn');
+const reconnectPersonalBtn = document.getElementById('reconnect-personal-btn');
+const dismissBannerBtn = document.getElementById('dismiss-banner-btn');
+let orgReconnected = false;
+let personalReconnected = false;
+function updateButtonState(button, isReconnected) {
+    button.classList.remove('bg-orange-600', 'hover:bg-orange-700', 'border', 'border-orange-600', 'text-orange-600', 'hover:bg-orange-50', 'bg-green-500', 'text-white', 'cursor-not-allowed', 'cursor-wait', 'button-reconnecting');
+    if (isReconnected) {
+        button.textContent = 'Reconnected!';
+        button.disabled = true;
+        button.classList.add('button-reconnected');
+    } else {
+        button.textContent = 'Reconnecting...';
+        button.disabled = true;
+        button.classList.add('button-reconnecting');
+    }
+}
+function checkAndDismissBanner() {
+    if (orgReconnected && personalReconnected) {
+        setTimeout(() => {
+            banner.classList.remove('scale-100', 'opacity-100');
+            banner.classList.add('scale-95', 'opacity-0');
+            banner.addEventListener('transitionend', () => banner.remove());
+        }, 1000);
+    }
+}
+reconnectOrgBtn.addEventListener('click', () => {
+    if (orgReconnected) return;
+    updateButtonState(reconnectOrgBtn, false);
+    setTimeout(() => {
+        orgReconnected = true;
+        updateButtonState(reconnectOrgBtn, true);
+        checkAndDismissBanner();
+    }, 2000);
+});
+reconnectPersonalBtn.addEventListener('click', () => {
+    if (personalReconnected) return;
+    updateButtonState(reconnectPersonalBtn, false);
+    setTimeout(() => {
+        personalReconnected = true;
+        updateButtonState(reconnectPersonalBtn, true);
+        checkAndDismissBanner();
+    }, 2000);
+});
+dismissBannerBtn.addEventListener('click', () => {
+    banner.classList.remove('scale-100', 'opacity-100');
+    banner.classList.add('scale-95', 'opacity-0');
+    banner.addEventListener('transitionend', () => banner.remove());
+});
+</script>
+</body>
+</html>
